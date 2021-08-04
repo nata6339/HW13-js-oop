@@ -1,7 +1,9 @@
 let isShort = false;
 class Timer {
-    constructor({timer}) {
-        this.timer = timer;
+    constructor({}) {
+        document.getElementById('clock').addEventListener("click", function () {
+            isShort = !isShort;
+        });
     };
 
     render(){
@@ -17,14 +19,12 @@ class Timer {
         } else {
             document.getElementById('clock').innerHTML = hours + ':' + minutes + ':' + seconds;
         }
-        document.getElementById('clock').addEventListener("click", function () {
-            isShort = !isShort;
-        });
+
     };
 
     start() {
         this.render();
-        this.timer = setInterval(() => this.render(), 100);
+        this.timer = setInterval(() => this.render(), 1000);
     }
 }
 let clock = new Timer({timer: 'hours : minutes : seconds'});
