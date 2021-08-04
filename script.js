@@ -24,8 +24,8 @@ class Timer {
 
     start() {
         this.render();
-        this.timer = setInterval(() => this.render(), 1000);
+        setInterval(() => this.render(), 1000);
     }
 }
-let clock = new Timer({timer: 'hours : minutes : seconds'});
-clock.start();
+let timer = new Timer({timer: 'hours : minutes : seconds'});
+timer.start();
