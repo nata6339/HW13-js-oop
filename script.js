@@ -1,7 +1,8 @@
 class Timer {
-    constructor({}) {
-        this.elem = document.getElementById('clock');
+    constructor({elem}) {
+        this.elem = elem;
         this.isShort = false
+
     };
 
     render(){
@@ -13,9 +14,9 @@ class Timer {
         let seconds = fullDate.getSeconds();
         if (seconds < 10) seconds = '0' + seconds;
         if(this.isShort){
-            this.elem.innerHTML = hours + ':' + minutes;
+            this.elem = hours + ':' + minutes;
         } else {
-            this.elem.innerHTML = hours + ':' + minutes + ':' + seconds;
+            this.elem = hours + ':' + minutes + ':' + seconds;
         }
     };
 
@@ -34,3 +35,5 @@ timer.start();
 document.getElementById('clock').addEventListener("click", function () {
     timer.toggle();
 });
+document.getElementById('clock').innerHTML = timer.elem;
+
