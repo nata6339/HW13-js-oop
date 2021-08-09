@@ -1,22 +1,15 @@
 class Timer {
-    constructor({elem}) {
-        this.elem = elem;
-        this.isShort = false
-
+    constructor() {
+        this.isShort = false;
+        this.fullFormat = 'hh:mm:ss';
+        this.shortFormat = 'hh:mm';
     };
 
     render(){
-        let fullDate = new Date();
-        let hours = fullDate.getHours();
-        if (hours < 10) hours = '0' + hours;
-        let minutes = fullDate.getMinutes();
-        if (minutes < 10) minutes = '0' + minutes;
-        let seconds = fullDate.getSeconds();
-        if (seconds < 10) seconds = '0' + seconds;
         if(this.isShort){
-            this.elem = hours + ':' + minutes;
+            return this.formatDate(this.shortFormat);
         } else {
-            this.elem = hours + ':' + minutes + ':' + seconds;
+            return this.formatDate(this.fullFormat);
         }
     };
 
@@ -24,16 +17,41 @@ class Timer {
         this.isShort = !this.isShort;
     };
 
-    start() {
-        this.render();
-        setInterval(() => this.render(), 1000);
+    setShortFormat(shortFormat){
+        this.shortFormat = shortFormat;
+    };
+
+    setFullFormat(fullFormat){
+        this.fullFormat = fullFormat;
+    };
+
+    formatDate(format){
+        let fullDate = new Date();
+        let hours = this.fixNumber(fullDate.getHours());
+        let minutes = this.fixNumber(fullDate.getMinutes());
+        let seconds = this.fixNumber(fullDate.getSeconds());
+        this.fixNumber()
+        let ren = format
+            .replace('hh', hours)
+            .replace('mm', minutes)
+            .replace('ss', seconds)
+        return ren;
+    };
+
+    fixNumber(num){
+
+        if (num < 10)
+            return '0' + num;
+        return num;
     };
 }
 
-let timer = new Timer({});
-timer.start();
+let timer = new Timer();
+setInterval(function (){
+    document.getElementById('clock').innerHTML = timer.render();
+},1000);
 document.getElementById('clock').addEventListener("click", function () {
     timer.toggle();
 });
-document.getElementById('clock').innerHTML = timer.elem;
+
 
